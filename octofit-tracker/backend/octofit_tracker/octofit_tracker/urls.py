@@ -4,7 +4,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 
 REST API Endpoints:
-    - Codespace URL format: https://$CODESPACE_NAME-8000.app.github.dev/api/[component]/
+    - Codespace URL: https://effective-invention-7vpxj5r6jr7w3xg4g-8000.app.github.dev/api/[component]/
     - Local URL format: http://localhost:8000/api/[component]/
     
 Examples:
