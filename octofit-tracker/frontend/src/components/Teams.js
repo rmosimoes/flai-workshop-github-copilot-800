@@ -35,31 +35,65 @@ function Teams() {
     fetchTeams();
   }, []);
 
-  if (loading) return <div className="container mt-4"><p>Loading teams...</p></div>;
-  if (error) return <div className="container mt-4"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3 text-muted">Loading teams...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger error-alert" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mt-4">
-      <h2>Teams</h2>
+    <div className="container mt-5">
+      <div className="page-header">
+        <h2 className="text-primary">
+          <i className="bi bi-people"></i> Teams
+        </h2>
+        <p className="text-muted">Manage and view all fitness teams</p>
+      </div>
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-hover">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Members</th>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Members</th>
             </tr>
           </thead>
           <tbody>
-            {teams.map((team) => (
-              <tr key={team.id}>
-                <td>{team.id}</td>
-                <td>{team.name}</td>
-                <td>{team.description}</td>
-                <td>{team.member_count || (team.members ? team.members.length : 0)}</td>
+            {teams.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center text-muted py-4">
+                  No teams found
+                </td>
               </tr>
-            ))}
+            ) : (
+              teams.map((team) => (
+                <tr key={team.id}>
+                  <td><span className="badge bg-secondary">{team.id}</span></td>
+                  <td><strong>{team.name}</strong></td>
+                  <td>{team.description}</td>
+                  <td><span className="badge bg-primary">{team.member_count || (team.members ? team.members.length : 0)}</span></td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

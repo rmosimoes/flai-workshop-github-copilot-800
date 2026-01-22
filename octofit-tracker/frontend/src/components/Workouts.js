@@ -35,33 +35,68 @@ function Workouts() {
     fetchWorkouts();
   }, []);
 
-  if (loading) return <div className="container mt-4"><p>Loading workouts...</p></div>;
-  if (error) return <div className="container mt-4"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3 text-muted">Loading workouts...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger error-alert" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mt-4">
-      <h2>Workout Suggestions</h2>
+    <div className="container mt-5">
+      <div className="page-header">
+        <h2 className="text-primary">
+          <i className="bi bi-lightning"></i> Workout Suggestions
+        </h2>
+        <p className="text-muted">Personalized workout recommendations for your fitness journey</p>
+      </div>
       <div className="row">
-        {workouts.map((workout) => (
-          <div key={workout.id} className="col-md-4 mb-4">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{workout.name}</h5>
-                <p className="card-text">{workout.description}</p>
-                <p className="card-text">
-                  <small className="text-muted">
-                    Duration: {workout.duration} min | Difficulty: {workout.difficulty}
-                  </small>
-                </p>
-                <p className="card-text">
-                  <small className="text-muted">
-                    Calories: {workout.calories} | Type: {workout.workout_type}
-                  </small>
-                </p>
-              </div>
+        {workouts.length === 0 ? (
+          <div className="col-12">
+            <div className="alert alert-info text-center" role="alert">
+              No workout suggestions available at the moment
             </div>
           </div>
-        ))}
+        ) : (
+          workouts.map((workout) => (
+            <div key={workout.id} className="col-md-4 mb-4">
+              <div className="card h-100">
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title">{workout.name}</h5>
+                  <p className="card-text flex-grow-1">{workout.description}</p>
+                  <div className="mt-3">
+                    <div className="d-flex justify-content-between mb-2">
+                      <span className="badge bg-primary">Duration: {workout.duration} min</span>
+                      <span className="badge bg-warning text-dark">Difficulty: {workout.difficulty}</span>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <span className="badge bg-success">Calories: {workout.calories}</span>
+                      <span className="badge bg-info">{workout.workout_type}</span>
+                    </div>
+                  </div>
+                  <button className="btn btn-primary btn-sm mt-3">Start Workout</button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

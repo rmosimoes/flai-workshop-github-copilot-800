@@ -13,7 +13,10 @@ function App() {
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="/">OctoFit Tracker</Link>
+            <Link className="navbar-brand" to="/">
+              <img src="/octofitapp-logo.png" alt="OctoFit Logo" className="navbar-logo" />
+              OctoFit Tracker
+            </Link>
             <button 
               className="navbar-toggler" 
               type="button" 
@@ -48,10 +51,14 @@ function App() {
           <Route path="/" element={
             <div className="container mt-5">
               <div className="jumbotron text-center">
-                <h1 className="display-4">Welcome to OctoFit Tracker</h1>
-                <p className="lead">Track your fitness activities, compete with teams, and reach your goals!</p>
+                <h1 className="display-3">Welcome to OctoFit Tracker</h1>
+                <p className="lead mt-3">Track your fitness activities, compete with teams, and reach your goals!</p>
                 <hr className="my-4" />
-                <p>Use the navigation menu above to explore different sections.</p>
+                <p className="fs-5">Use the navigation menu above to explore different sections.</p>
+                <div className="mt-4">
+                  <Link to="/activities" className="btn btn-light btn-lg me-2">View Activities</Link>
+                  <Link to="/leaderboard" className="btn btn-outline-light btn-lg">Leaderboard</Link>
+                </div>
               </div>
             </div>
           } />

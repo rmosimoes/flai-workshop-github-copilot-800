@@ -35,31 +35,72 @@ function Leaderboard() {
     fetchLeaderboard();
   }, []);
 
-  if (loading) return <div className="container mt-4"><p>Loading leaderboard...</p></div>;
-  if (error) return <div className="container mt-4"><p className="text-danger">Error: {error}</p></div>;
+  if (loading) {
+    return (
+      <div className="container mt-5">
+        <div className="loading-spinner">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3 text-muted">Loading leaderboard...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container mt-5">
+        <div className="alert alert-danger error-alert" role="alert">
+          <h4 className="alert-heading">Error!</h4>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mt-4">
-      <h2>Leaderboard</h2>
+    <div className="container mt-5">
+      <div className="page-header">
+        <h2 className="text-primary">
+          <i className="bi bi-trophy"></i> Leaderboard
+        </h2>
+        <p className="text-muted">Top performers based on total calories burned</p>
+      </div>
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-hover">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th>User</th>
-              <th>Total Calories</th>
-              <th>Total Activities</th>
+              <th scope="col">Rank</th>
+              <th scope="col">User</th>
+              <th scope="col">Total Calories</th>
+              <th scope="col">Total Activities</th>
             </tr>
           </thead>
           <tbody>
-            {leaderboard.map((entry, index) => (
-              <tr key={entry.id || index}>
-                <td>{index + 1}</td>
-                <td>{entry.user_name || entry.user}</td>
-                <td>{entry.total_calories}</td>
-                <td>{entry.total_activities}</td>
+            {leaderboard.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center text-muted py-4">
+                  No leaderboard data available
+                </td>
               </tr>
-            ))}
+            ) : (
+              leaderboard.map((entry, index) => {
+                let rankBadge = 'bg-secondary';
+                if (index === 0) rankBadge = 'bg-warning';
+                else if (index === 1) rankBadge = 'bg-secondary';
+                else if (index === 2) rankBadge = 'bg-danger';
+                
+                return (
+                  <tr key={entry.id || index}>
+                    <td><span className={`badge ${rankBadge}`}>{index + 1}</span></td>
+                    <td><strong>{entry.user_name || entry.user}</strong></td>
+                    <td><span className="badge bg-success">{entry.total_calories}</span></td>
+                    <td><span className="badge bg-info">{entry.total_activities}</span></td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
