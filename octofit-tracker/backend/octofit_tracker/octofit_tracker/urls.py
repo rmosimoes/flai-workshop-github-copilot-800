@@ -20,6 +20,7 @@ from octofit_tracker.views import (
     UserViewSet, TeamViewSet, ActivityViewSet, 
     LeaderboardViewSet, WorkoutViewSet, api_root
 )
+import os
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)

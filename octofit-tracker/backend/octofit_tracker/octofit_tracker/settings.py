@@ -25,7 +25,16 @@ SECRET_KEY = 'django-insecure-$hyu$d8cjr-kpmy421dy(*a+$@n9yu8&v^nhbz8o)i%wo-_)6_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+CODESPACE_NAME = os.getenv('CODESPACE_NAME')
+if CODESPACE_NAME:
+    ALLOWED_HOSTS = [
+        f'{CODESPACE_NAME}-8000.app.github.dev',
+        'localhost',
+        '127.0.0.1',
+    ]
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -133,7 +142,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True
+import os
+CODESPACE_NAME = os.getenv('CODESPACE_NAME')
+if CODESPACE_NAME:
+    CORS_ALLOWED_ORIGINS = [
+        f'https://{CODESPACE_NAME}-8000.app.github.dev',
+        f'https://{CODESPACE_NAME}-3000.app.github.dev',
+    ]
+    CSRF_TRUSTED_ORIGINS = [
+        f'https://{CODESPACE_NAME}-8000.app.github.dev',
+        f'https://{CODESPACE_NAME}-3000.app.github.dev',
+    ]
+else:
+    CORS_ALLOW_ALL_ORIGINS = True
+
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
